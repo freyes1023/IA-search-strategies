@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/app/components/busqueda-amplitud/busqueda-amplitud.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1681955662027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1681956657146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Component } from '@angular/core';\n-\n+/* \n class Nodo {\n   constructor(public datos: any, public padre: Nodo, public valorArista: number) {\n     this.hijos = [];\n   }\n@@ -51,20 +51,20 @@\n       { valor: 4, valorArista: 3 }\n     ];\n   }\n }\n-\n+ */\n @Component({\n   selector: 'app-busqueda-amplitud',\n   templateUrl: './busqueda-amplitud.component.html',\n   styleUrls: ['./busqueda-amplitud.component.css']\n })\n export class BusquedaAmplitudComponent {\n-  raiz: DatosBusqueda = new DatosBusqueda(1);\n+/*   raiz: DatosBusqueda = new DatosBusqueda(1);\n   arbol: ArbolBusqueda = new ArbolBusqueda(new Nodo(this.raiz, null, 0));\n   solucion = 4;\n   nodoSolucion: Nodo \n \n   buscar() {\n     this.nodoSolucion = this.arbol.buscar(this.solucion);\n-  }\n+  } */\n }\n"
+                },
+                {
+                    "date": 1682033530251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n  */\n @Component({\n   selector: 'app-busqueda-amplitud',\n   templateUrl: './busqueda-amplitud.component.html',\n-  styleUrls: ['./busqueda-amplitud.component.css']\n+  styleUrls: ['./busqueda-amplitud.component.scss']\n })\n export class BusquedaAmplitudComponent {\n /*   raiz: DatosBusqueda = new DatosBusqueda(1);\n   arbol: ArbolBusqueda = new ArbolBusqueda(new Nodo(this.raiz, null, 0));\n"
+                }
+            ],
+            "date": 1681955662027,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\n\nclass Nodo {\n  constructor(public datos: any, public padre: Nodo, public valorArista: number) {\n    this.hijos = [];\n  }\n\n  hijos: Nodo[];\n\n  agregarHijo(datos: any, valorArista: number): Nodo {\n    const nodo = new Nodo(datos, this, valorArista);\n    this.hijos.push(nodo);\n    return nodo;\n  }\n}\n\nclass ArbolBusqueda {\n  constructor(public raiz: Nodo) {}\n\n  buscar(solucion: any): Nodo {\n    let nodosPorBuscar: Nodo[] = [this.raiz];\n    while (nodosPorBuscar.length > 0) {\n      const nodoActual = nodosPorBuscar.shift();\n      if (nodoActual.datos.esSolucion(solucion)) {\n        return nodoActual;\n      }\n      const hijos = nodoActual.datos.generarHijos();\n      hijos.forEach(hijo => {\n        const valorArista = hijo.valorArista;\n        delete hijo.valorArista; // Eliminar el valor de la arista para evitar un ciclo infinito en la serialización a JSON\n        const nodoHijo = nodoActual.agregarHijo(hijo, valorArista);\n        nodosPorBuscar.push(nodoHijo);\n      });\n    }\n    return null;\n  }\n}\n\nclass DatosBusqueda {\n  constructor(public valor: number) {}\n\n  esSolucion(solucion: number): boolean {\n    return this.valor === solucion;\n  }\n\n  generarHijos(): any[] {\n    // Generar los nodos hijos aquí\n    return [\n      { valor: 2, valorArista: 1 },\n      { valor: 3, valorArista: 2 },\n      { valor: 4, valorArista: 3 }\n    ];\n  }\n}\n\n@Component({\n  selector: 'app-busqueda-amplitud',\n  templateUrl: './busqueda-amplitud.component.html',\n  styleUrls: ['./busqueda-amplitud.component.css']\n})\nexport class BusquedaAmplitudComponent {\n  raiz: DatosBusqueda = new DatosBusqueda(1);\n  arbol: ArbolBusqueda = new ArbolBusqueda(new Nodo(this.raiz, null, 0));\n  solucion = 4;\n  nodoSolucion: Nodo \n\n  buscar() {\n    this.nodoSolucion = this.arbol.buscar(this.solucion);\n  }\n}\n"
+        }
+    ]
+}

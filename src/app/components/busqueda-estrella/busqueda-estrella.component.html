@@ -1,0 +1,22 @@
+<!-- <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">Busqueda en estrella</h1>
+
+<button style="padding: 8px 16px; font-size: 16px; font-weight: bold; background-color: #008CBA; color: #fff; border: none; border-radius: 4px;" (click)="iniciarBusqueda()">Iniciar búsqueda</button>
+
+<p *ngIf="caminoEncontrado.length > 0" style="margin-top: 16px;">Se encontró un camino: {{ caminoEncontrado }}</p>
+
+<p style="margin-top: 16px;">Visitados: {{ visitados }}</p>
+<p>En cola: {{ enCola }}</p> -->
+
+<div *ngIf="shortestPath">
+    La ruta más corta es 
+    <ul>
+        <li *ngFor="let item of shortestPath">
+            {{item}}
+        </li>
+    </ul><span>
+
+    </span>
+  </div>
+  <div *ngIf="!shortestPath">
+    No se encontró una ruta desde la ciudad de inicio hasta la ciudad de destino.
+  </div>
