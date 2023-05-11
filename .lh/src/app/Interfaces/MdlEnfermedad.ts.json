@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/Interfaces/MdlEnfermedad.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683846330155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683846330155,
+            "name": "Commit-0",
+            "content": "export interface MdlEnfermedad\n{\n    ID:string;\n    Descripcion: string;\n}"
+        }
+    ]
+}

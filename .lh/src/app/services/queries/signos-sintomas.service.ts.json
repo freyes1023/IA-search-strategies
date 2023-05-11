@@ -3,11 +3,31 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1683788712950,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683831973880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,9 @@\n import { Injectable } from '@angular/core';\n import { Firestore, collection, collectionData, } from '@angular/fire/firestore';\n import { Observable } from 'rxjs';\n+import { MdlSignosSintomas } from './MdlSignosSintomas';\n \n-export interface MdlSignosSintomas {\n-  Descripcion: string;\n-  ID: string\n-  order:number\n-}\n @Injectable({\n   providedIn: 'root'\n })\n export class SignosSintomasService {\n"
+                },
+                {
+                    "date": 1683832013463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import { Injectable } from '@angular/core';\n import { Firestore, collection, collectionData, } from '@angular/fire/firestore';\n import { Observable } from 'rxjs';\n-import { MdlSignosSintomas } from './MdlSignosSintomas';\n+import { MdlSignosSintomas } from '../../Interfaces/MdlSignosSintomas';\n \n @Injectable({\n   providedIn: 'root'\n })\n"
+                },
+                {
+                    "date": 1683835382462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import { Injectable } from '@angular/core';\n import { Firestore, collection, collectionData, } from '@angular/fire/firestore';\n import { Observable } from 'rxjs';\n import { MdlSignosSintomas } from '../../Interfaces/MdlSignosSintomas';\n+import { addDoc } from 'firebase/firestore';\n \n @Injectable({\n   providedIn: 'root'\n })\n@@ -10,8 +11,12 @@\n \n   constructor(private firestore : Firestore) { }\n \n   getSintomas ():Observable<MdlSignosSintomas[]>{\n-   const ref = collection(this.firestore,'/SIGNOS_SINTOMAS')\n+   const ref = collection(this.firestore,'SIGNOS_SINTOMAS')\n     return collectionData(ref,{idField:'ID'}) as Observable<MdlSignosSintomas[]>\n   }\n+  addSintomas(data : MdlSignosSintomas){\n+    const ref = collection(this.firestore, 'SIGNOS_SINTOMAS');\n+   return addDoc(ref, data);\n+  }\n }\n"
+                },
+                {
+                    "date": 1683835463477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n   getSintomas ():Observable<MdlSignosSintomas[]>{\n    const ref = collection(this.firestore,'SIGNOS_SINTOMAS')\n     return collectionData(ref,{idField:'ID'}) as Observable<MdlSignosSintomas[]>\n   }\n+  \n   addSintomas(data : MdlSignosSintomas){\n     const ref = collection(this.firestore, 'SIGNOS_SINTOMAS');\n    return addDoc(ref, data);\n   }\n"
+                },
+                {
+                    "date": 1683842043177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,11 @@\n   constructor(private firestore : Firestore) { }\n \n   getSintomas ():Observable<MdlSignosSintomas[]>{\n    const ref = collection(this.firestore,'SIGNOS_SINTOMAS')\n-    return collectionData(ref,{idField:'ID'}) as Observable<MdlSignosSintomas[]>\n+    return collectionData(ref,{idField:'IDDocument'}) as Observable<MdlSignosSintomas[]>\n   }\n-  \n+\n   addSintomas(data : MdlSignosSintomas){\n     const ref = collection(this.firestore, 'SIGNOS_SINTOMAS');\n    return addDoc(ref, data);\n   }\n"
                 }
             ],
             "date": 1683788712950,

@@ -1,28 +1,23 @@
 
 <div class="container">
+    <legend class="col-form-legend col-4">Signos y Síntomas</legend>
     <form>
-       <!--  <div class="mb-3 row">
-            <label for="inputName" class="col-4 col-form-label">Name</label>
-            <div class="col-8">
-                <input type="text" class="form-control" name="inputName" id="inputName" placeholder="Name">
-            </div> 
-        </div>-->
         <fieldset class="mb-3 row">
-            <legend class="col-form-legend col-4">Signos y Síntomas</legend>
+          
             <div class="col-8">
                 <div class="list-group">
-                    <label class="list-group-item" *ngFor="let item of signosSintomas ">
-                      <input class="form-check-input me-1" type="checkbox" value="">
+                    <label class="list-group-item" *ngFor="let item of signosSintomas ; let i = index" >
+                      <input class="form-check-input me-1" type="checkbox" [value]="item.checked" (change)="Check(i)">
                       {{item.Descripcion}}
                     </label>
                   
                   </div>
             </div>
         </fieldset>
-        <div class="mb-3 row">
-            <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-primary">Action</button>
-            </div>
-        </div>
     </form>
+    <div class="mb-3 row">
+        <div class="offset-sm-4 col-sm-8">
+            <button  class="btn btn-primary" (click)="Generate()" [disabled]="sintomasSelected.length < 3">Action</button>
+        </div>
+    </div>
 </div>

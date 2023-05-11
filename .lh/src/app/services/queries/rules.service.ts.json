@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/app/services/queries/rules.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1683832268987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683832889120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n export class RulesService {\n \n   constructor(private firestore : Firestore) { }\n \n-  addRules(data : IRules){\n+  addRules({ data }: { data: IRules; }){\n     const ref = collection(this.firestore, 'rules');\n-    addDoc(ref, data);\n+   return addDoc(ref, data);\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683832906758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n export class RulesService {\n \n   constructor(private firestore : Firestore) { }\n \n-  addRules({ data }: { data: IRules; }){\n+  addRules(data : IRules){\n     const ref = collection(this.firestore, 'rules');\n    return addDoc(ref, data);\n   }\n \n"
+                },
+                {
+                    "date": 1683832959979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \n   constructor(private firestore : Firestore) { }\n \n   addRules(data : IRules){\n-    const ref = collection(this.firestore, 'rules');\n+    const ref = collection(this.firestore, 'RULES');\n    return addDoc(ref, data);\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683843184147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Injectable } from '@angular/core';\n-import { Firestore, collection, addDoc } from '@angular/fire/firestore';\n+import { Firestore, collection, addDoc, query, where, getDocs } from '@angular/fire/firestore';\n import { IRules } from 'src/app/Interfaces/MdlRules';\n \n @Injectable({\n   providedIn: 'root'\n@@ -13,5 +13,14 @@\n     const ref = collection(this.firestore, 'RULES');\n    return addDoc(ref, data);\n   }\n \n+  getRulesContains(data: string[]) {\n+    const ref = collection(this.firestore, 'RULES');\n+    const q = query(ref,\n+      where('Descripcion', 'array-contains-any', data));\n+\n+    return getDocs(q);\n+\n+  }\n+\n }\n"
+                },
+                {
+                    "date": 1683843271752,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,7 @@\n     const q = query(ref,\n       where('Descripcion', 'array-contains-any', data));\n \n     return getDocs(q);\n-\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683843652036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,13 +13,13 @@\n     const ref = collection(this.firestore, 'RULES');\n    return addDoc(ref, data);\n   }\n \n-  getRulesContains(data: string[]) {\n+  async getRulesContains(data: string[]) {\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n       where('Descripcion', 'array-contains-any', data));\n \n-    return getDocs(q);\n+    return await getDocs(q);\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683843808008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   async getRulesContains(data: string[]) {\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n       where('Descripcion', 'array-contains-any', data));\n-\n-    return await getDocs(q);\n+      const docs = await getDocs(q)\n+    return docs ;\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683844007403,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n   async getRulesContains(data: string[]) {\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n-      where('Descripcion', 'array-contains-any', data));\n+      where('Descripcion', 'in', data));\n       const docs = await getDocs(q)\n     return docs ;\n   }\n \n"
+                },
+                {
+                    "date": 1683844670554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { Injectable } from '@angular/core';\n-import { Firestore, collection, addDoc, query, where, getDocs } from '@angular/fire/firestore';\n+import { Firestore, collection, addDoc, query, where, getDocs, docData } from '@angular/fire/firestore';\n import { IRules } from 'src/app/Interfaces/MdlRules';\n \n @Injectable({\n   providedIn: 'root'\n@@ -18,8 +18,14 @@\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n       where('Descripcion', 'in', data));\n       const docs = await getDocs(q)\n-    return docs ;\n+      let  datas :IRules[] = [];\n+      docs.forEach((doc) => {\n+        console.log(doc.id, ' => ', doc.data());\n+        datas.push((<IRules>doc.data()));\n+    });\n+     \n+    return datas ;\n   }\n \n }\n"
+                },
+                {
+                    "date": 1683844740490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n   async getRulesContains(data: string[]) {\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n-      where('Descripcion', 'in', data));\n+      where('Descripcion', 'array-contains-any', data));\n       const docs = await getDocs(q)\n       let  datas :IRules[] = [];\n       docs.forEach((doc) => {\n         console.log(doc.id, ' => ', doc.data());\n"
+                },
+                {
+                    "date": 1683844882191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n   async getRulesContains(data: string[]) {\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n-      where('Descripcion', 'array-contains-any', data));\n+      where('Descripcion', '==', data));\n       const docs = await getDocs(q)\n       let  datas :IRules[] = [];\n       docs.forEach((doc) => {\n         console.log(doc.id, ' => ', doc.data());\n"
+                },
+                {
+                    "date": 1683846286623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,16 @@\n import { Injectable } from '@angular/core';\n import { Firestore, collection, addDoc, query, where, getDocs, docData } from '@angular/fire/firestore';\n-import { IRules } from 'src/app/Interfaces/MdlRules';\n+import { MdlRules } from 'src/app/Interfaces/MdlRules';\n \n @Injectable({\n   providedIn: 'root'\n })\n export class RulesService {\n \n   constructor(private firestore : Firestore) { }\n \n-  addRules(data : IRules){\n+  addRules(data : MdlRules){\n     const ref = collection(this.firestore, 'RULES');\n    return addDoc(ref, data);\n   }\n \n@@ -18,12 +18,12 @@\n     const ref = collection(this.firestore, 'RULES');\n     const q = query(ref,\n       where('Descripcion', '==', data));\n       const docs = await getDocs(q)\n-      let  datas :IRules[] = [];\n+      let  datas :MdlRules[] = [];\n       docs.forEach((doc) => {\n         console.log(doc.id, ' => ', doc.data());\n-        datas.push((<IRules>doc.data()));\n+        datas.push((<MdlRules>doc.data()));\n     });\n      \n     return datas ;\n   }\n"
+                }
+            ],
+            "date": 1683832268987,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\nimport { Firestore, collection, addDoc } from '@angular/fire/firestore';\nimport { IRules } from 'src/app/Interfaces/MdlRules';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class RulesService {\n\n  constructor(private firestore : Firestore) { }\n\n  addRules(data : IRules){\n    const ref = collection(this.firestore, 'rules');\n    addDoc(ref, data);\n  }\n\n}\n"
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/app/services/queries/enfermedades.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1683845503255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683846385196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import { Injectable } from '@angular/core';\n import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';\n+import { MdlEnfermedad } from 'src/app/Interfaces/MdlEnfermedad';\n \n @Injectable({\n   providedIn: 'root'\n })\n@@ -12,12 +13,12 @@\n     const ref = collection(this.firestore, 'ENFERMEDADES');\n     const q = query(ref,\n       where('ID', '==', data));\n       const docs = await getDocs(q)\n-      let  datas :any[] = [];\n+      let  datas :MdlEnfermedad[] = [];\n       docs.forEach((doc) => {\n         console.log(doc.id, ' => ', doc.data());\n-        datas.push((<any>doc.data()));\n+        datas.push((<MdlEnfermedad>doc.data()));\n     });\n      \n     return datas ;\n   }\n"
+                },
+                {
+                    "date": 1683846438452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n export class EnfermedadesService {\n \n   constructor(private firestore: Firestore) { }\n \n-  async getEnfermedadId(data: string) {\n+  async getEnfermedadId(data: string): Promise<MdlEnfermedad[]> {\n     const ref = collection(this.firestore, 'ENFERMEDADES');\n     const q = query(ref,\n       where('ID', '==', data));\n       const docs = await getDocs(q)\n"
+                },
+                {
+                    "date": 1683848640777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,28 @@\n      \n     return datas ;\n   }\n \n+  async getEnfermedadIds(data: string[]): Promise<MdlEnfermedad[]> {\n+    return new Promise(resolve => {\n+      let enfermedades:  Array<MdlEnfermedad> = [];\n+      data.forEach(async (element) => {\n+        const ref = collection(this.firestore, 'ENFERMEDADES');\n+        const q = query(ref,\n+          where('ID', '==', data));\n+          const docs = await getDocs(q)\n+          let  datas :MdlEnfermedad[] = [];\n+          docs.forEach((doc) => {\n+            console.log(doc.id, ' => ', doc.data());\n+            datas.push((<MdlEnfermedad>doc.data()));\n+        });\n+         \n+        enfermedades.push(datas[0]);\n+         \n+      });\n+\n+      resolve(enfermedades);\n+\n+    });\n+   \n+  }\n }\n"
+                },
+                {
+                    "date": 1683848900762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,15 +28,16 @@\n       let enfermedades:  Array<MdlEnfermedad> = [];\n       data.forEach(async (element) => {\n         const ref = collection(this.firestore, 'ENFERMEDADES');\n         const q = query(ref,\n-          where('ID', '==', data));\n+          where('ID', '==', element));\n           const docs = await getDocs(q)\n           let  datas :MdlEnfermedad[] = [];\n           docs.forEach((doc) => {\n             console.log(doc.id, ' => ', doc.data());\n             datas.push((<MdlEnfermedad>doc.data()));\n         });\n+         //console.log('datas data' , elemen);\n          \n         enfermedades.push(datas[0]);\n          \n       });\n"
+                },
+                {
+                    "date": 1683848929366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n           docs.forEach((doc) => {\n             console.log(doc.id, ' => ', doc.data());\n             datas.push((<MdlEnfermedad>doc.data()));\n         });\n-         //console.log('datas data' , elemen);\n+         console.log('datas data' , element, datas);\n          \n         enfermedades.push(datas[0]);\n          \n       });\n"
+                },
+                {
+                    "date": 1683848966952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,10 @@\n          \n         enfermedades.push(datas[0]);\n          \n       });\n-\n+      console.log('enfermedades', enfermedades);\n+      \n       resolve(enfermedades);\n \n     });\n    \n"
+                },
+                {
+                    "date": 1683849024319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n          console.log('datas data' , element, datas);\n          \n         enfermedades.push(datas[0]);\n          \n-      });\n+      })\n       console.log('enfermedades', enfermedades);\n       \n       resolve(enfermedades);\n \n"
+                }
+            ],
+            "date": 1683845503255,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\nimport { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class EnfermedadesService {\n\n  constructor(private firestore: Firestore) { }\n\n  async getEnfermedadId(data: string) {\n    const ref = collection(this.firestore, 'ENFERMEDADES');\n    const q = query(ref,\n      where('ID', '==', data));\n      const docs = await getDocs(q)\n      let  datas :any[] = [];\n      docs.forEach((doc) => {\n        console.log(doc.id, ' => ', doc.data());\n        datas.push((<any>doc.data()));\n    });\n     \n    return datas ;\n  }\n\n}\n"
+        }
+    ]
+}

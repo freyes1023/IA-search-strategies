@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1683789440280,
@@ -20,6 +20,58 @@
                 {
                     "date": 1683790037402,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n                 <input type=\"text\" class=\"form-control\" name=\"inputName\" id=\"inputName\" placeholder=\"Name\">\n             </div> \n         </div>-->\n         <fieldset class=\"mb-3 row\">\n-            <legend class=\"col-form-legend col-4\">Group name</legend>\n+            <legend class=\"col-form-legend col-4\">Signos y Síntomas</legend>\n             <div class=\"col-8\">\n                 <div class=\"list-group\">\n                     <label class=\"list-group-item\" *ngFor=\"let item of signosSintomas \">\n                       <input class=\"form-check-input me-1\" type=\"checkbox\" value=\"\">\n"
+                },
+                {
+                    "date": 1683832729304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             </div>\n         </fieldset>\n         <div class=\"mb-3 row\">\n             <div class=\"offset-sm-4 col-sm-8\">\n-                <button type=\"submit\" class=\"btn btn-primary\">Action</button>\n+                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n             </div>\n         </div>\n     </form>\n </div>\n"
+                },
+                {
+                    "date": 1683833000439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n             </div>\n         </fieldset>\n         <div class=\"mb-3 row\">\n             <div class=\"offset-sm-4 col-sm-8\">\n-                <button type=\"submit\" class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n+                <button  class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n             </div>\n         </div>\n     </form>\n </div>\n"
+                },
+                {
+                    "date": 1683833034247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,11 +18,11 @@\n                   \n                   </div>\n             </div>\n         </fieldset>\n-        <div class=\"mb-3 row\">\n-            <div class=\"offset-sm-4 col-sm-8\">\n-                <button  class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n-            </div>\n+    </form>\n+    <div class=\"mb-3 row\">\n+        <div class=\"offset-sm-4 col-sm-8\">\n+            <button  class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n         </div>\n-    </form>\n+    </div>\n </div>\n"
+                },
+                {
+                    "date": 1683835942257,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"addRules()\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683836089074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\">Action</button>\n+            <button  class=\"btn btn-primary\" >Action</button><!-- (click)=\"addSintomas()\" -->\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683841268602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,16 @@\n \n <div class=\"container\">\n+    <legend class=\"col-form-legend col-4\">Signos y Síntomas</legend>\n     <form>\n        <!--  <div class=\"mb-3 row\">\n             <label for=\"inputName\" class=\"col-4 col-form-label\">Name</label>\n             <div class=\"col-8\">\n                 <input type=\"text\" class=\"form-control\" name=\"inputName\" id=\"inputName\" placeholder=\"Name\">\n             </div> \n         </div>-->\n         <fieldset class=\"mb-3 row\">\n-            <legend class=\"col-form-legend col-4\">Signos y Síntomas</legend>\n+          \n             <div class=\"col-8\">\n                 <div class=\"list-group\">\n                     <label class=\"list-group-item\" *ngFor=\"let item of signosSintomas \">\n                       <input class=\"form-check-input me-1\" type=\"checkbox\" value=\"\">\n"
+                },
+                {
+                    "date": 1683841853111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,14 @@\n \n <div class=\"container\">\n     <legend class=\"col-form-legend col-4\">Signos y Síntomas</legend>\n     <form>\n-       <!--  <div class=\"mb-3 row\">\n-            <label for=\"inputName\" class=\"col-4 col-form-label\">Name</label>\n-            <div class=\"col-8\">\n-                <input type=\"text\" class=\"form-control\" name=\"inputName\" id=\"inputName\" placeholder=\"Name\">\n-            </div> \n-        </div>-->\n         <fieldset class=\"mb-3 row\">\n           \n             <div class=\"col-8\">\n                 <div class=\"list-group\">\n-                    <label class=\"list-group-item\" *ngFor=\"let item of signosSintomas \">\n-                      <input class=\"form-check-input me-1\" type=\"checkbox\" value=\"\">\n+                    <label class=\"list-group-item\" *ngFor=\"let item of signosSintomas ; let i = index\" >\n+                      <input class=\"form-check-input me-1\" type=\"checkbox\" [value]=\"item.checked\" (change)=\"Check(i)\">\n                       {{item.Descripcion}}\n                     </label>\n                   \n                   </div>\n"
+                },
+                {
+                    "date": 1683841988751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" >Action</button><!-- (click)=\"addSintomas()\" -->\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683846831598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length > 0\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683846849015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length > 0\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 0\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683846859512,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 0\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length >0\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683846874978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length >0\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length > 0\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683846960253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length > 0\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n </div>\n"
                 }
             ],
             "date": 1683789440280,
