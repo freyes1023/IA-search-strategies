@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/app-routing.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683788944527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683788944527,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\nimport { RouterModule, Routes } from '@angular/router';\nimport { ExpertSystemComponent } from './pages/expertSystem/expert-system/expert-system.component';\n\nconst routes: Routes = [\n  { path: 'home', component: ExpertSystemComponent },\n  \n  { path: '**', redirectTo: 'home' },\n  { path: '', redirectTo: 'home', pathMatch: 'full' }, \n];\n//Generate routes for each component here.\n//For example:\n//routes.push({ path: 'home', component: HomeComponent } \n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule]\n})\nexport class AppRoutingModule { }\n"
+        }
+    ]
+}

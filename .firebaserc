@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "ia-search-strategies"
+  },
+  "targets": {
+    "ia-search-strategies": {
+      "hosting": {
+        "IA-search-strategies": [
+          "ia-search-strategies"
+        ]
+      }
+    }
   }
 }

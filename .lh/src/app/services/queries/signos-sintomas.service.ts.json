@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/services/queries/signos-sintomas.service.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683788712950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683788712950,
+            "name": "Commit-0",
+            "content": "import { Injectable } from '@angular/core';\nimport { Firestore, collection, collectionData, } from '@angular/fire/firestore';\nimport { Observable } from 'rxjs';\n\nexport interface MdlSignosSintomas {\n  Descripcion: string;\n  ID: string\n  order:number\n}\n@Injectable({\n  providedIn: 'root'\n})\nexport class SignosSintomasService {\n\n  constructor(private firestore : Firestore) { }\n\n  getSintomas ():Observable<MdlSignosSintomas[]>{\n   const ref = collection(this.firestore,'/SIGNOS_SINTOMAS')\n    return collectionData(ref,{idField:'ID'}) as Observable<MdlSignosSintomas[]>\n  }\n}\n"
+        }
+    ]
+}

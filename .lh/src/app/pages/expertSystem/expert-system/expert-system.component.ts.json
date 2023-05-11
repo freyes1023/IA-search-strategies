@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/app/pages/expertSystem/expert-system/expert-system.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1683789106727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683789295162,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { SignosSintomasService } from './../../../services/queries/signos-sintomas.service';\n+import { MdlSignosSintomas, SignosSintomasService } from './../../../services/queries/signos-sintomas.service';\n import { Component, OnInit } from '@angular/core';\n \n @Component({\n   selector: 'app-expert-system',\n@@ -7,14 +7,18 @@\n   styleUrls: ['./expert-system.component.scss']\n })\n export class ExpertSystemComponent implements OnInit {\n \n+signosSintomas : MdlSignosSintomas[] = [];\n+\n   constructor(private signosSintomasService: SignosSintomasService) { }\n \n   ngOnInit(): void {\n     this.signosSintomasService.getSintomas().subscribe(data => {\n       console.log('data',data);\n-      \n+      if (data) {\n+        this.signosSintomas = data;\n+      }\n     })\n   \n   }\n \n"
+                },
+                {
+                    "date": 1683790293549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   ngOnInit(): void {\n     this.signosSintomasService.getSintomas().subscribe(data => {\n       console.log('data',data);\n       if (data) {\n-        this.signosSintomas = data;\n+        this.signosSintomas = data.sort((a,b) => a.order - b.order );\n       }\n     })\n   \n   }\n"
+                },
+                {
+                    "date": 1683790321041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n   ngOnInit(): void {\n     this.signosSintomasService.getSintomas().subscribe(data => {\n       console.log('data',data);\n       if (data) {\n-        this.signosSintomas = data.sort((a,b) => a.order - b.order );\n+        this.signosSintomas = data.sort((a,b) => b.order - a.order );\n       }\n     })\n   \n   }\n"
+                },
+                {
+                    "date": 1683790400776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,10 @@\n   ngOnInit(): void {\n     this.signosSintomasService.getSintomas().subscribe(data => {\n       console.log('data',data);\n       if (data) {\n-        this.signosSintomas = data.sort((a,b) => b.order - a.order );\n+        this.signosSintomas = data.sort((a,b) => (a.order > b.order) ? 1 : -1)\n+        console.log('signosSintomas',this.signosSintomas);\n       }\n     })\n   \n   }\n"
+                }
+            ],
+            "date": 1683789106727,
+            "name": "Commit-0",
+            "content": "import { SignosSintomasService } from './../../../services/queries/signos-sintomas.service';\nimport { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-expert-system',\n  templateUrl: './expert-system.component.html',\n  styleUrls: ['./expert-system.component.scss']\n})\nexport class ExpertSystemComponent implements OnInit {\n\n  constructor(private signosSintomasService: SignosSintomasService) { }\n\n  ngOnInit(): void {\n    this.signosSintomasService.getSintomas().subscribe(data => {\n      console.log('data',data);\n      \n    })\n  \n  }\n\n}\n"
+        }
+    ]
+}
