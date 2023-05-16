@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 28,
             "patches": [
                 {
                     "date": 1683789440280,
@@ -72,6 +72,54 @@
                 {
                     "date": 1683846960253,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length > 0\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n </div>\n"
+                },
+                {
+                    "date": 1683855882766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,16 @@\n         <div class=\"offset-sm-4 col-sm-8\">\n             <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n+\n+    <section>\n+        <legend class=\"col-form-legend col-4\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n+\n+        <div class=\"mb-3\">\n+          <label for=\"\" class=\"form-label\">Nombre</label>\n+          <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n+            class=\"form-control\" name=\"\" id=\"\" aria-describedby=\"helpId\" placeholder=\"\">\n+          <small id=\"helpId\" class=\"form-text text-muted\">Help text</small>\n+        </div>\n+    </section>\n </div>\n"
+                },
+                {
+                    "date": 1683855994656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         </div>\n     </div>\n \n     <section>\n-        <legend class=\"col-form-legend col-4\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n+        <p class=\"col-form-legend col-4\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</p>\n \n         <div class=\"mb-3\">\n           <label for=\"\" class=\"form-label\">Nombre</label>\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n"
+                },
+                {
+                    "date": 1683856033891,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         </div>\n     </div>\n \n     <section>\n-        <p class=\"col-form-legend col-4\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</p>\n+        <legend class=\"col-form-legend col-12\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n \n         <div class=\"mb-3\">\n           <label for=\"\" class=\"form-label\">Nombre</label>\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n"
+                },
+                {
+                    "date": 1683856059660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         </div>\n     </div>\n \n     <section>\n-        <legend class=\"col-form-legend col-12\">si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n+        <legend class=\"col-form-legend col-12\"> Si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n \n         <div class=\"mb-3\">\n           <label for=\"\" class=\"form-label\">Nombre</label>\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n"
+                },
+                {
+                    "date": 1683856107978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n         <div class=\"mb-3\">\n           <label for=\"\" class=\"form-label\">Nombre</label>\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n             class=\"form-control\" name=\"\" id=\"\" aria-describedby=\"helpId\" placeholder=\"\">\n-          <small id=\"helpId\" class=\"form-text text-muted\">Help text</small>\n+          <small id=\"helpId\" class=\"form-text text-muted\">Añade el nombre para esta enfermedad según los signos</small>\n         </div>\n     </section>\n </div>\n"
+                },
+                {
+                    "date": 1683856162139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,6 +29,7 @@\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n             class=\"form-control\" name=\"\" id=\"\" aria-describedby=\"helpId\" placeholder=\"\">\n           <small id=\"helpId\" class=\"form-text text-muted\">Añade el nombre para esta enfermedad según los signos</small>\n         </div>\n+        <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">Agregar</button>\n     </section>\n </div>\n"
+                },
+                {
+                    "date": 1683856231843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,16 +20,16 @@\n             <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n \n-    <section>\n+    <section *ngIf=\"mostrarAddEnfermedad\">\n         <legend class=\"col-form-legend col-12\"> Si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>\n \n         <div class=\"mb-3\">\n           <label for=\"\" class=\"form-label\">Nombre</label>\n           <input type=\"text\" [(ngModel)]=\"newEnfermedad\"\n             class=\"form-control\" name=\"\" id=\"\" aria-describedby=\"helpId\" placeholder=\"\">\n           <small id=\"helpId\" class=\"form-text text-muted\">Añade el nombre para esta enfermedad según los signos</small>\n         </div>\n-        <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">Agregar</button>\n+        <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"addEnfermedad()\">Agregar</button>\n     </section>\n </div>\n"
+                },
+                {
+                    "date": 1684220333607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,5 +31,14 @@\n           <small id=\"helpId\" class=\"form-text text-muted\">Añade el nombre para esta enfermedad según los signos</small>\n         </div>\n         <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"addEnfermedad()\">Agregar</button>\n     </section>\n+\n+    <section>\n+      <div class=\"col-12\">\n+        <label for=\"\" class=\"form-label\">Seleccione archivo </label>\n+        <input type=\"file\" class=\"form-control\" name=\"\" id=\"\" placeholder=\"\" aria-describedby=\"fileHelpId\"\n+          (change)=\"onFileSelected($event)\">\n+        <div id=\"fileHelpId\" class=\"form-text\">Archivo con la data a analizar</div>\n+      </div>\n+    </section>\n </div>\n"
+                },
+                {
+                    "date": 1684222475904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n         </div>\n         <button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\" (click)=\"addEnfermedad()\">Agregar</button>\n     </section>\n \n-    <section>\n+    <section *ngIf=\"false\">\n       <div class=\"col-12\">\n         <label for=\"\" class=\"form-label\">Seleccione archivo </label>\n         <input type=\"file\" class=\"form-control\" name=\"\" id=\"\" placeholder=\"\" aria-describedby=\"fileHelpId\"\n           (change)=\"onFileSelected($event)\">\n"
+                },
+                {
+                    "date": 1684223329069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n \n     <section *ngIf=\"mostrarAddEnfermedad\">\n"
+                },
+                {
+                    "date": 1684223382880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\" >Action</button>\n         </div>\n     </div>\n \n     <section *ngIf=\"mostrarAddEnfermedad\">\n"
+                },
+                {
+                    "date": 1684223399678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         </fieldset>\n     </form>\n     <div class=\"mb-3 row\">\n         <div class=\"offset-sm-4 col-sm-8\">\n-            <button  class=\"btn btn-primary\" (click)=\"addSintomas()\" >Action</button>\n+            <button  class=\"btn btn-primary\" (click)=\"Generate()\" [disabled]=\"sintomasSelected.length < 3\">Action</button>\n         </div>\n     </div>\n \n     <section *ngIf=\"mostrarAddEnfermedad\">\n"
                 }
             ],
             "date": 1683789440280,

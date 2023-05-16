@@ -20,4 +20,25 @@
             <button  class="btn btn-primary" (click)="Generate()" [disabled]="sintomasSelected.length < 3">Action</button>
         </div>
     </div>
+
+    <section *ngIf="mostrarAddEnfermedad">
+        <legend class="col-form-legend col-12"> Si eres experto añade el nombre de esta enfermedad para reconocerla a futuro</legend>
+
+        <div class="mb-3">
+          <label for="" class="form-label">Nombre</label>
+          <input type="text" [(ngModel)]="newEnfermedad"
+            class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+          <small id="helpId" class="form-text text-muted">Añade el nombre para esta enfermedad según los signos</small>
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="button" aria-pressed="false" autocomplete="off" (click)="addEnfermedad()">Agregar</button>
+    </section>
+
+    <section *ngIf="false">
+      <div class="col-12">
+        <label for="" class="form-label">Seleccione archivo </label>
+        <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId"
+          (change)="onFileSelected($event)">
+        <div id="fileHelpId" class="form-text">Archivo con la data a analizar</div>
+      </div>
+    </section>
 </div>

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 57,
             "patches": [
                 {
                     "date": 1683789106727,
@@ -144,6 +144,98 @@
                 {
                     "date": 1683848737480,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n       });\n       }\n       let enfermedades:string[] = []\n         this.enfermedadesService.getEnfermedadIds(data.map((data)=>{return data.Enfermedad})).then(enfermedades => {\n-          console.log('enfermedades', enfermedades);');\n+          console.log('enfermedades', enfermedades);\n           \n           enfermedades.push(enfermedades[0]) \n         })\n \n"
+                },
+                {
+                    "date": 1683854787028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n        alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + enfermedad[0].Descripcion)\n        return\n       });\n       }\n+      \n       let enfermedades:string[] = []\n         this.enfermedadesService.getEnfermedadIds(data.map((data)=>{return data.Enfermedad})).then(enfermedades => {\n           console.log('enfermedades', enfermedades);\n           \n"
+                },
+                {
+                    "date": 1683855751327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,10 @@\n   templateUrl: './expert-system.component.html',\n   styleUrls: ['./expert-system.component.scss']\n })\n export class ExpertSystemComponent implements OnInit {\n-\n+mostrarAddEnfermedad = false\n+newEnfermedad : string = ''\n   signosSintomas: MdlSignosSintomas[] = [];\n   sintomasSelected: MdlSignosSintomas[] = []\n   constructor(private signosSintomasService: SignosSintomasService, private rulesService: RulesService, private enfermedadesService:  EnfermedadesService) { }\n \n"
+                },
+                {
+                    "date": 1683855882901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n   styleUrls: ['./expert-system.component.scss']\n })\n export class ExpertSystemComponent implements OnInit {\n mostrarAddEnfermedad = false\n-newEnfermedad : string = ''\n+newEnfermedad :any\n   signosSintomas: MdlSignosSintomas[] = [];\n   sintomasSelected: MdlSignosSintomas[] = []\n   constructor(private signosSintomasService: SignosSintomasService, private rulesService: RulesService, private enfermedadesService:  EnfermedadesService) { }\n \n"
+                },
+                {
+                    "date": 1683856485560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,20 @@\n     console.log('signosSintomas', this.signosSintomas);\n     this.sintomasSelected =  this.signosSintomas.filter(element => element.checked).map(element => element);\n   }\n \n+  addEnfermedad(){\n+    const data : MdlEnfermedad = {\n+      Descripcion: this.newEnfermedad,\n+      ID: new Date().valueOf().toString()\n+    \n+    }\n+    this.enfermedadesService.addEnfermedad(data).then(data => {\n+      alert('Enfermedad Agregada Gracias')\n+      this.mostrarAddEnfermedad = false\n+    })\n+  }\n+\n   Generate(){\n     const sintomas = this.signosSintomas.filter(element => element.checked).map(element => element.ID);\n     \n     if (this.sintomasSelected.length < 3) {\n"
+                },
+                {
+                    "date": 1683856704245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,8 +63,9 @@\n     this.rulesService.getRulesContains(sintomas).then(data => {\n       console.log('Rules',data);\n       if (data.length == 0) {\n         alert('No hay reglas que cumplan con esos sintomas');\n+        this.mostrarAddEnfermedad = true\n         return\n       }\n       if (data.length == 1) {\n        //  alert('Regla: ' + data[0].Descripcion);\n"
+                },
+                {
+                    "date": 1683857172014,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,16 +35,27 @@\n     this.sintomasSelected =  this.signosSintomas.filter(element => element.checked).map(element => element);\n   }\n \n   addEnfermedad(){\n+    const Id = new Date().valueOf().toString();\n     const data : MdlEnfermedad = {\n       Descripcion: this.newEnfermedad,\n-      ID: new Date().valueOf().toString()\n+      ID: Id\n     \n     }\n     this.enfermedadesService.addEnfermedad(data).then(data => {\n-      alert('Enfermedad Agregada Gracias')\n+      console.log('enfermedad añadida', data);\n+      \n+      const rule: MdlRules = {\n+        ID: new Date().valueOf().toString(),\n+        Enfermedad : Id,\n+        Descripcion: this.signosSintomas.filter(element => element.checked).map(element => element.ID)\n+      }\n+      this.rulesService.addRules(rule).then(data => {\n+        alert('Enfermedad Agregada Gracias')\n       this.mostrarAddEnfermedad = false\n+      })\n+      \n     })\n   }\n \n   Generate(){\n"
+                },
+                {
+                    "date": 1683954734015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n     })\n   }\n \n   Generate(){\n+    this.mostrarAddEnfermedad = false;\n     const sintomas = this.signosSintomas.filter(element => element.checked).map(element => element.ID);\n     \n     if (this.sintomasSelected.length < 3) {\n       alert('Seleccione al menos un sintoma');\n"
+                },
+                {
+                    "date": 1683954760140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     this.mostrarAddEnfermedad = false;\n     const sintomas = this.signosSintomas.filter(element => element.checked).map(element => element.ID);\n     \n     if (this.sintomasSelected.length < 3) {\n-      alert('Seleccione al menos un sintoma');\n+      alert('Seleccione al menos un síntoma');\n       return\n     } \n       \n     \n"
+                },
+                {
+                    "date": 1684220052406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,11 @@\n })\n export class ExpertSystemComponent implements OnInit {\n mostrarAddEnfermedad = false\n newEnfermedad :any\n+data : any[] = [];\n+dataFile!: File; \n+\n   signosSintomas: MdlSignosSintomas[] = [];\n   sintomasSelected: MdlSignosSintomas[] = []\n   constructor(private signosSintomasService: SignosSintomasService, private rulesService: RulesService, private enfermedadesService:  EnfermedadesService) { }\n \n@@ -107,11 +110,33 @@\n       \n       \n       \n     })\n+\n+   \n     \n   }\n \n+  FillDatabase() {\n+    const File: File = this.dataFile\n+    if (File.type == 'text/csv') {\n+      this.data = []\n+\n+      File.text().then((data) => {\n+        const list = data.split(\"\\n\")//.splice(0,1);\n+        const initialCell = 2 \n+\n+        list.splice(0, initialCell);\n+        list.forEach((e: any) => {\n+          this.data.push(e);\n+        });\n+        console.log('data', this.data);\n+        \n+      })\n+\n+    }\n+  }\n+\n   /*  async addRules() {\n      dataRules.forEach(async element => {\n        const response = await this.rulesService.addRules(element);\n        console.log('response', response);\n"
+                },
+                {
+                    "date": 1684220261762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -114,8 +114,16 @@\n \n    \n     \n   }\n+  onFileSelected(event: any) {\n+    if (event.target.files.length > 0) {\n+      this.dataFile = event.target.files[0] as File\n+      if (this.dataFile.type == 'text/csv') {\n+        this.FillDatabase();\n+      }\n+    }\n+  }\n \n   FillDatabase() {\n     const File: File = this.dataFile\n     if (File.type == 'text/csv') {\n"
+                },
+                {
+                    "date": 1684220684258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n       this.data = []\n \n       File.text().then((data) => {\n         const list = data.split(\"\\n\")//.splice(0,1);\n-        const initialCell = 2 \n+        const initialCell = 1\n \n         list.splice(0, initialCell);\n         list.forEach((e: any) => {\n           this.data.push(e);\n"
+                },
+                {
+                    "date": 1684220865781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,12 +133,15 @@\n         const list = data.split(\"\\n\")//.splice(0,1);\n         const initialCell = 1\n \n         list.splice(0, initialCell);\n-        list.forEach((e: any) => {\n-          this.data.push(e);\n+        list.forEach((e: string) => {\n+          const element = e.replace(/\"/g, \"\").replace(/n\"/g, \"\").split(\",\");\n+          this.data.push(element);\n         });\n         console.log('data', this.data);\n+\n+        data\n         \n       })\n \n     }\n"
+                },
+                {
+                    "date": 1684220921567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -134,9 +134,9 @@\n         const initialCell = 1\n \n         list.splice(0, initialCell);\n         list.forEach((e: string) => {\n-          const element = e.replace(/\"/g, \"\").replace(/n\"/g, \"\").split(\",\");\n+          const element = e.replace(/\"/g, \"\").replace(/\\n/g, \"\").split(\",\");\n           this.data.push(element);\n         });\n         console.log('data', this.data);\n \n"
+                },
+                {
+                    "date": 1684220937155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -134,9 +134,9 @@\n         const initialCell = 1\n \n         list.splice(0, initialCell);\n         list.forEach((e: string) => {\n-          const element = e.replace(/\"/g, \"\").replace(/\\n/g, \"\").split(\",\");\n+          const element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n           this.data.push(element);\n         });\n         console.log('data', this.data);\n \n"
+                },
+                {
+                    "date": 1684221089391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,10 +133,11 @@\n         const list = data.split(\"\\n\")//.splice(0,1);\n         const initialCell = 1\n \n         list.splice(0, initialCell);\n-        list.forEach((e: string) => {\n-          const element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n+        list.forEach((e: any) => {\n+          let element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n+          element[3] = element[3].split(\".\");\n           this.data.push(element);\n         });\n         console.log('data', this.data);\n \n"
+                },
+                {
+                    "date": 1684221402312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -140,9 +140,8 @@\n           this.data.push(element);\n         });\n         console.log('data', this.data);\n \n-        data\n         \n       })\n \n     }\n"
+                },
+                {
+                    "date": 1684222022256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,10 @@\n       \n       const rule: MdlRules = {\n         ID: new Date().valueOf().toString(),\n         Enfermedad : Id,\n-        Descripcion: this.signosSintomas.filter(element => element.checked).map(element => element.ID)\n+        Descripcion: this.signosSintomas.filter(element => element.checked).map(element => element.ID),\n+        NameEmfermedad:this.newEnfermedad\n       }\n       this.rulesService.addRules(rule).then(data => {\n         alert('Enfermedad Agregada Gracias')\n       this.mostrarAddEnfermedad = false\n@@ -137,8 +138,14 @@\n         list.forEach((e: any) => {\n           let element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n           element[3] = element[3].split(\".\");\n           this.data.push(element);\n+          const dato = {\n+            ID: element[0],\n+            Descripcion: element[3],\n+            Enfermedad: element[2],\n+            NameEmfermedad: element[1]\n+          }\n         });\n         console.log('data', this.data);\n \n         \n"
+                },
+                {
+                    "date": 1684222129523,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -132,9 +132,9 @@\n \n       File.text().then((data) => {\n         const list = data.split(\"\\n\")//.splice(0,1);\n         const initialCell = 1\n-\n+        let dataDB:any[] = []\n         list.splice(0, initialCell);\n         list.forEach((e: any) => {\n           let element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n           element[3] = element[3].split(\".\");\n@@ -144,9 +144,13 @@\n             Descripcion: element[3],\n             Enfermedad: element[2],\n             NameEmfermedad: element[1]\n           }\n+          dataDB.push(dato)\n+        \n         });\n+\n+        console.log('data DB', dataDB);\n         console.log('data', this.data);\n \n         \n       })\n"
+                },
+                {
+                    "date": 1684222280229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,9 +141,9 @@\n           this.data.push(element);\n           const dato = {\n             ID: element[0],\n             Descripcion: element[3],\n-            Enfermedad: element[2],\n+            Enfermedad: '00'+element[2],\n             NameEmfermedad: element[1]\n           }\n           dataDB.push(dato)\n         \n"
+                },
+                {
+                    "date": 1684222326734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -141,9 +141,9 @@\n           this.data.push(element);\n           const dato = {\n             ID: element[0],\n             Descripcion: element[3],\n-            Enfermedad: '00'+element[2],\n+            Enfermedad: element[2],\n             NameEmfermedad: element[1]\n           }\n           dataDB.push(dato)\n         \n"
+                },
+                {
+                    "date": 1684222374669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -132,11 +132,10 @@\n \n       File.text().then((data) => {\n         const list = data.split(\"\\n\")//.splice(0,1);\n         const initialCell = 1\n-        let dataDB:any[] = []\n         list.splice(0, initialCell);\n-        list.forEach((e: any) => {\n+        list.forEach(async (e: any) => {\n           let element = e.replace(/\"/g, \"\").replace(/\\r/g, \"\").split(\",\");\n           element[3] = element[3].split(\".\");\n           this.data.push(element);\n           const dato = {\n@@ -144,13 +143,12 @@\n             Descripcion: element[3],\n             Enfermedad: element[2],\n             NameEmfermedad: element[1]\n           }\n-          dataDB.push(dato)\n+          const response = await this.rulesService.addRules(dato);\n         \n         });\n \n-        console.log('data DB', dataDB);\n         console.log('data', this.data);\n \n         \n       })\n"
+                },
+                {
+                    "date": 1684222648413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,12 +84,14 @@\n         return\n       }\n       if (data.length == 1) {\n        //  alert('Regla: ' + data[0].Descripcion);\n-        this.enfermedadesService.getEnfermedadId(data[0].Enfermedad).then(enfermedad => {;\n-       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + enfermedad[0].Descripcion)\n+       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + data[0].NameEmfermedad)\n        return\n-      });\n+       /*  this.enfermedadesService.getEnfermedadId(data[0].Enfermedad).then(enfermedad => {;\n+       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + enfermedad[0].Descripcion) \n+       return\n+      });*/\n       }\n       \n       let enfermedades:string[] = []\n         this.enfermedadesService.getEnfermedadIds(data.map((data)=>{return data.Enfermedad})).then(enfermedades => {\n"
+                },
+                {
+                    "date": 1684223305120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -162,19 +162,29 @@\n      dataRules.forEach(async element => {\n        const response = await this.rulesService.addRules(element);\n        console.log('response', response);\n      }) \n-   }\n+   }*/\n   async addSintomas() {\n     dataSintomas.forEach(async (element: MdlSignosSintomas) => {\n       const response = await this.signosSintomasService.addSintomas(element);\n       console.log('response', response);\n     })\n   }\n-*/\n+\n }\n-/* const dataSintomas: MdlSignosSintomas[] = [\n+ const dataSintomas: MdlSignosSintomas[] = [\n   {\n+    ID: '101',\n+    Descripcion: 'Dolor de cabeza',\n+    order: 1\n+  },\n+  {\n+    ID: '102',\n+    Descripcion: 'Escalofrio',\n+    order: 2\n+  },\n+  {\n     ID: '103',\n     Descripcion: 'Migraña',\n     order: 3\n   },\n@@ -226,11 +236,46 @@\n   {\n     ID: '113',\n     Descripcion: 'Diarrea',\n     order: 13\n+  },\n+  {\n+    ID: '114',\n+    Descripcion: 'Goteo Nariz',\n+    order: 14\n+  },\n+  {\n+    ID: '115',\n+    Descripcion: 'Ojos Inflamados',\n+    order: 15\n+  },\n+  {\n+    ID: '116',\n+    Descripcion: 'Colicos',\n+    order: 16\n+  },\n+  {\n+    ID: '117',\n+    Descripcion: 'Perdida de peso',\n+    order: 17\n+  },\n+  {\n+    ID: '201',\n+    Descripcion: 'Fiebre',\n+    order: 18\n+  },\n+  {\n+    ID: '202',\n+    Descripcion: 'Flema',\n+    order: 19\n+  },\n+  {\n+    ID: '203',\n+    Descripcion: 'Manchas Blancas en la piel',\n+    order: 20\n   }\n ]\n- */\n+ \n /* const dataRules = [\n   {\n     ID: 'R3',\n     Descripcion: ['102', '103', '104'],\n"
                 }
             ],
             "date": 1683789106727,

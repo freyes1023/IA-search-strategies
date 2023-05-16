@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, getDocs, query, where } from '@angular/fire/firestore';
 import { MdlEnfermedad } from 'src/app/Interfaces/MdlEnfermedad';
 
 @Injectable({
@@ -8,6 +8,10 @@ import { MdlEnfermedad } from 'src/app/Interfaces/MdlEnfermedad';
 export class EnfermedadesService {
 
   constructor(private firestore: Firestore) { }
+  addEnfermedad(data : MdlEnfermedad){
+    const ref = collection(this.firestore, 'ENFERMEDADES');
+   return addDoc(ref, data);
+  }
 
   async getEnfermedadId(data: string): Promise<MdlEnfermedad[]> {
     const ref = collection(this.firestore, 'ENFERMEDADES');

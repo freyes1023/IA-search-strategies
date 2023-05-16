@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/app.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683855970095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683855970095,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { BusquedaAmplitudComponent } from './components/busqueda-amplitud/busqueda-amplitud.component';\nimport { BusquedaEstrellaComponent } from './components/busqueda-estrella/busqueda-estrella.component';\nimport { initializeApp,provideFirebaseApp } from '@angular/fire/app';\nimport { environment } from '../environments/environment';\nimport { provideFirestore,getFirestore } from '@angular/fire/firestore';\nimport { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';\nimport { provideStorage,getStorage } from '@angular/fire/storage';\nimport { ExpertSystemComponent } from './pages/expertSystem/expert-system/expert-system.component';\nimport { FormsModule, ReactiveFormsModule } from '@angular/forms';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    BusquedaAmplitudComponent,\n    BusquedaEstrellaComponent,\n    ExpertSystemComponent\n  ],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    provideFirebaseApp(() => initializeApp(environment.firebase)),\n    provideFirestore(() => getFirestore()),\n    provideRemoteConfig(() => getRemoteConfig()),\n    provideStorage(() => getStorage()),\n    ReactiveFormsModule,\n    FormsModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n"
+        }
+    ]
+}

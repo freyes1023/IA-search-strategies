@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1683832473164,
@@ -12,6 +12,14 @@
                 {
                     "date": 1683846286615,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-export interface IRules{\n+export interface MdlRules{\n     Enfermedad : string;\n     ID:string;\n     Descripcion: string[];\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1684221907854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n export interface MdlRules{\n     Enfermedad : string;\n     ID:string;\n     Descripcion: string[];\n+    NameEmfermedad:string\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1684221978354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n export interface MdlRules{\n     Enfermedad : string;\n     ID:string;\n     Descripcion: string[];\n-    NameEmfermedad:string\n+    NameEmfermedad:string;\n }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1683832473164,

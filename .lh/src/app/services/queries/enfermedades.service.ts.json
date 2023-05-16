@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1683845503255,
@@ -36,6 +36,10 @@
                 {
                     "date": 1683849024319,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n          console.log('datas data' , element, datas);\n          \n         enfermedades.push(datas[0]);\n          \n-      });\n+      })\n       console.log('enfermedades', enfermedades);\n       \n       resolve(enfermedades);\n \n"
+                },
+                {
+                    "date": 1683856332413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,18 @@\n import { Injectable } from '@angular/core';\n-import { Firestore, collection, getDocs, query, where } from '@angular/fire/firestore';\n+import { Firestore, addDoc, collection, getDocs, query, where } from '@angular/fire/firestore';\n import { MdlEnfermedad } from 'src/app/Interfaces/MdlEnfermedad';\n \n @Injectable({\n   providedIn: 'root'\n })\n export class EnfermedadesService {\n \n   constructor(private firestore: Firestore) { }\n+  addEnfermedad(data : MdlEnfermedad){\n+    const ref = collection(this.firestore, 'ENFERMEDADES');\n+   return addDoc(ref, data);\n+  }\n \n   async getEnfermedadId(data: string): Promise<MdlEnfermedad[]> {\n     const ref = collection(this.firestore, 'ENFERMEDADES');\n     const q = query(ref,\n"
                 }
             ],
             "date": 1683845503255,

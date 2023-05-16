@@ -12,6 +12,10 @@ import { MdlEnfermedad } from 'src/app/Interfaces/MdlEnfermedad';
   styleUrls: ['./expert-system.component.scss']
 })
 export class ExpertSystemComponent implements OnInit {
+mostrarAddEnfermedad = false
+newEnfermedad :any
+data : any[] = [];
+dataFile!: File; 
 
   signosSintomas: MdlSignosSintomas[] = [];
   sintomasSelected: MdlSignosSintomas[] = []
@@ -34,11 +38,36 @@ export class ExpertSystemComponent implements OnInit {
     this.sintomasSelected =  this.signosSintomas.filter(element => element.checked).map(element => element);
   }
 
+  addEnfermedad(){
+    const Id = new Date().valueOf().toString();
+    const data : MdlEnfermedad = {
+      Descripcion: this.newEnfermedad,
+      ID: Id
+    
+    }
+    this.enfermedadesService.addEnfermedad(data).then(data => {
+      console.log('enfermedad añadida', data);
+      
+      const rule: MdlRules = {
+        ID: new Date().valueOf().toString(),
+        Enfermedad : Id,
+        Descripcion: this.signosSintomas.filter(element => element.checked).map(element => element.ID),
+        NameEmfermedad:this.newEnfermedad
+      }
+      this.rulesService.addRules(rule).then(data => {
+        alert('Enfermedad Agregada Gracias')
+      this.mostrarAddEnfermedad = false
+      })
+      
+    })
+  }
+
   Generate(){
+    this.mostrarAddEnfermedad = false;
     const sintomas = this.signosSintomas.filter(element => element.checked).map(element => element.ID);
     
     if (this.sintomasSelected.length < 3) {
-      alert('Seleccione al menos un sintoma');
+      alert('Seleccione al menos un síntoma');
       return
     } 
       
@@ -51,15 +80,19 @@ export class ExpertSystemComponent implements OnInit {
       console.log('Rules',data);
       if (data.length == 0) {
         alert('No hay reglas que cumplan con esos sintomas');
+        this.mostrarAddEnfermedad = true
         return
       }
       if (data.length == 1) {
        //  alert('Regla: ' + data[0].Descripcion);
-        this.enfermedadesService.getEnfermedadId(data[0].Enfermedad).then(enfermedad => {;
-       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + enfermedad[0].Descripcion)
+       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + data[0].NameEmfermedad)
        return
-      });
+       /*  this.enfermedadesService.getEnfermedadId(data[0].Enfermedad).then(enfermedad => {;
+       alert('Según sintomas Hay una Gran probabilidad de que la la enfermedad sea ' + enfermedad[0].Descripcion) 
+       return
+      });*/
       }
+      
       let enfermedades:string[] = []
         this.enfermedadesService.getEnfermedadIds(data.map((data)=>{return data.Enfermedad})).then(enfermedades => {
           console.log('enfermedades', enfermedades);
@@ -81,7 +114,48 @@ export class ExpertSystemComponent implements OnInit {
       
       
     })
+
+   
     
+  }
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.dataFile = event.target.files[0] as File
+      if (this.dataFile.type == 'text/csv') {
+        this.FillDatabase();
+      }
+    }
+  }
+
+  FillDatabase() {
+    const File: File = this.dataFile
+    if (File.type == 'text/csv') {
+      this.data = []
+
+      File.text().then((data) => {
+        const list = data.split("\n")//.splice(0,1);
+        const initialCell = 1
+        list.splice(0, initialCell);
+        list.forEach(async (e: any) => {
+          let element = e.replace(/"/g, "").replace(/\r/g, "").split(",");
+          element[3] = element[3].split(".");
+          this.data.push(element);
+          const dato = {
+            ID: element[0],
+            Descripcion: element[3],
+            Enfermedad: element[2],
+            NameEmfermedad: element[1]
+          }
+          const response = await this.rulesService.addRules(dato);
+        
+        });
+
+        console.log('data', this.data);
+
+        
+      })
+
+    }
   }
 
   /*  async addRules() {
@@ -89,16 +163,26 @@ export class ExpertSystemComponent implements OnInit {
        const response = await this.rulesService.addRules(element);
        console.log('response', response);
      }) 
-   }
+   }*/
   async addSintomas() {
     dataSintomas.forEach(async (element: MdlSignosSintomas) => {
       const response = await this.signosSintomasService.addSintomas(element);
       console.log('response', response);
     })
   }
-*/
+
 }
-/* const dataSintomas: MdlSignosSintomas[] = [
+ const dataSintomas: MdlSignosSintomas[] = [
+  {
+    ID: '101',
+    Descripcion: 'Dolor de cabeza',
+    order: 1
+  },
+  {
+    ID: '102',
+    Descripcion: 'Escalofrio',
+    order: 2
+  },
   {
     ID: '103',
     Descripcion: 'Migraña',
@@ -153,9 +237,44 @@ export class ExpertSystemComponent implements OnInit {
     ID: '113',
     Descripcion: 'Diarrea',
     order: 13
+  },
+  {
+    ID: '114',
+    Descripcion: 'Goteo Nariz',
+    order: 14
+  },
+  {
+    ID: '115',
+    Descripcion: 'Ojos Inflamados',
+    order: 15
+  },
+  {
+    ID: '116',
+    Descripcion: 'Colicos',
+    order: 16
+  },
+  {
+    ID: '117',
+    Descripcion: 'Perdida de peso',
+    order: 17
+  },
+  {
+    ID: '201',
+    Descripcion: 'Fiebre',
+    order: 18
+  },
+  {
+    ID: '202',
+    Descripcion: 'Flema',
+    order: 19
+  },
+  {
+    ID: '203',
+    Descripcion: 'Manchas Blancas en la piel',
+    order: 20
   }
 ]
- */
+ 
 /* const dataRules = [
   {
     ID: 'R3',
